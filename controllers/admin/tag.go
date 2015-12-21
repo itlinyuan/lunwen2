@@ -21,7 +21,7 @@ func (this *TagController) Index() {
 	}
 }
 
-//标签列表
+//标签列表(默认显示)
 func (this *TagController) list() {
 	var page int
 	var pagesize int = 10

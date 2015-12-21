@@ -82,11 +82,12 @@ func (m *Tag) MergeTo(to *Tag) {
 	var tp TagPost
 	tp.Query().Filter("tag_id", m.Id).All(&list)
 	if len(list) > 0 {
+		//记录所有跟修改的标签相关的文章
 		ids := make([]string, 0, len(list))
 		for _, v := range list {
 			ids = append(ids, strconv.Itoa(v.PostId))
 		}
-		tp.Query().Filter("tag_id", m.Id).Update(orm.Params{"tag_id": to.Id})
+		tp.Query().Filter("tag_id", m.Id).Update(orm.Params{"tag_id": to.Id}) //修改为新标签的id
 		orm.NewOrm().Raw("UPDATE "+new(Post).TableName()+" SET tags = REPLACE(tags, ?, ?) WHERE id IN ("+strings.Join(ids, ",")+")", ","+m.Name+",", ","+to.Name+",").Exec()
 	}
 }
