@@ -1,0 +1,20 @@
+<div itemscope itemtype="http://schema.org/Blog">
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">{{.post.Title}}</h1>
+	<div class="entry-content" itemprop="articleBody">
+	{{str2html .post.Content}}
+	</div>
+</article>
+</div>
+
+<section id="comment">
+    <!--高速版-->
+	<div id="SOHUCS"></div>
+	<script charset="utf-8" type="text/javascript" src="/static/js/changyan.js" ></script>
+	<script type="text/javascript">
+    window.changyan.api.config({
+        appid: 'cys85ThUo',
+        conf: 'prod_3fe283b6c5d0ba75ad0319e5718042a2'
+    });
+</script>    
+</section>
