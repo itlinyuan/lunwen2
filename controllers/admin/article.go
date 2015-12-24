@@ -21,7 +21,7 @@ func (this *ArticleController) List() {
 		page       int
 		pagesize   int = 10
 		status     int
-		offset     int
+		offset     int //偏移量
 		list       []*models.Post
 		post       models.Post
 		searchtype string
