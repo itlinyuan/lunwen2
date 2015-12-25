@@ -30,7 +30,7 @@ func (this *baseController) Prepare() {
 	this.cache = cache.(*util.LruCache)
 }
 
-//选择显示的主题是前台（default）还是后台（admin）
+//选择显示的主题，目前只有default
 func (this *baseController) display(tpl string) {
 	var theme string
 	if v := this.getOption("theme"); v != "" {

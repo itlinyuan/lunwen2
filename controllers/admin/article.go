@@ -99,7 +99,17 @@ func (this *ArticleController) Save() {
 	)
 
 	if title == "" {
-		this.showmsg("标题不能为空！")
+		//this.showmsg("标题不能为空！")
+		this.Data["titleMsg"] = "标题不能为空！"
+	}
+
+	var list []*models.Post
+	new(models.Post).Query().All(&list)
+
+	for _, v := range list {
+		if title == v.Title {
+			this.showmsg("标题重复！")
+		}
 	}
 
 	id, _ = this.GetInt("id")
@@ -116,7 +126,7 @@ func (this *ArticleController) Save() {
 	}
 
 	addtags := make([]string, 0)
-	//标签过滤
+	//标签过滤（查看当前的所有标签是否相同）
 	if tags != "" {
 		tagarr := strings.Split(tags, ",")
 		for _, v := range tagarr {
@@ -135,13 +145,13 @@ func (this *ArticleController) Save() {
 		}
 	}
 
-	if id < 1 {
+	if id < 1 { //新增的
 		post.UserId = this.userid
 		post.Author = this.username
 		post.PostTime = this.getTime()
 		post.UpdateTime = this.getTime()
 		post.Insert()
-	} else {
+	} else { //更新的
 		post.Id = id
 		if post.Read() != nil {
 			goto RD
@@ -150,7 +160,7 @@ func (this *ArticleController) Save() {
 			var tagobj models.Tag
 			var tagpostobj models.TagPost
 			oldtags := strings.Split(strings.Trim(post.Tags, ","), ",")
-			//标签统计-1
+			//标签统计-1，先删除当前的，后面在重新增加
 			tagobj.Query().Filter("name__in", oldtags).Update(orm.Params{"count": orm.ColValue(orm.Col_Minus, 1)})
 			//删掉tag_post表的记录
 			tagpostobj.Query().Filter("postid", post.Id).Delete()

@@ -23,8 +23,8 @@ type baseController struct {
 func (this *baseController) Prepare() {
 	controllerName, actionName := this.GetControllerAndAction()
 	this.moduleName = "admin"
-	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10])
-	this.actionName = strings.ToLower(actionName)
+	this.controllerName = strings.ToLower(controllerName[0 : len(controllerName)-10]) //如是articleController，就得到article
+	this.actionName = strings.ToLower(actionName)                                     //Add,Edit,Index等等
 	this.auth()
 	this.checkPermission()
 	cache, _ := util.Factory.Get("cache")

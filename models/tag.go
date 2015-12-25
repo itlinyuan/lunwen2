@@ -44,7 +44,7 @@ func (m *Tag) Update(fields ...string) error {
 func (m *Tag) Delete() error {
 	var list []*TagPost
 	table := new(Post).TableName()
-	new(TagPost).Query().Filter("tagid", m.Id).All(&list)
+	new(TagPost).Query().Filter("tag_id", m.Id).All(&list)
 	if len(list) > 0 {
 		ids := make([]string, 0, len(list))
 		for _, v := range list {

@@ -27,7 +27,9 @@ func (this *MainController) Index() {
 	if pagesize, err = strconv.Atoi(this.getOption("pagesize")); err != nil || pagesize < 1 {
 		pagesize = 10
 	}
-	//过滤除这两个条件外的所有记录，status：0是已发布，1是草稿箱，2是回收站，urltype:是不是文章的意思（跟心情和留言板做对比）
+	//过滤除这两个条件外的所有记录，status：0是已发布，1是草稿箱，2是回收站，
+	//Filter 作为orm 的主要作用是过滤查询条件， 最终将会转换为sql 语句中的where 条件语句。
+	//urltype:是不是文章的意思（跟心情和留言板做对比）
 	query := new(models.Post).Query().Filter("status", 0).Filter("urltype", 0)
 	count, _ := query.Count()
 	if count > 0 {
