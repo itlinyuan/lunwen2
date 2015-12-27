@@ -98,22 +98,25 @@ func (this *ArticleController) Save() {
 		post    models.Post
 	)
 
-	if title == "" {
-		//this.showmsg("标题不能为空！")
-		this.Data["titleMsg"] = "标题不能为空！"
-	}
-
-	var list []*models.Post
-	new(models.Post).Query().All(&list)
-
-	for _, v := range list {
-		if title == v.Title {
-			this.showmsg("标题重复！")
-		}
-	}
-
 	id, _ = this.GetInt("id")
 	status, _ = this.GetInt("status")
+
+	//	if title == "" {
+	//		//this.showmsg("标题不能为空！")
+	//		this.Data["titleMsg"] = "标题不能为空！"
+	//		//this.Redirect("/admin/article/list", 302)
+	//		this.display()
+	//	}
+
+	//	var list []*models.Post
+	//	new(models.Post).Query().All(&list)
+
+	//	for _, v := range list {
+	//		//当前标题不能跟之前的文章标题重复（id != v.Id：过滤掉是编辑文章时本身的冲突）
+	//		if title == v.Title && id != v.Id {
+	//			this.showmsg("标题重复！")
+	//		}
+	//	}
 
 	if this.GetString("istop") == "1" {
 		istop = 1

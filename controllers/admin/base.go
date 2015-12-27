@@ -78,7 +78,7 @@ func (this *baseController) showmsg(msg ...string) {
 	this.Data["adminid"] = this.userid
 	this.Data["adminname"] = this.username
 	this.Data["msg"] = msg[0]
-	this.Data["redirect"] = "/admin/main" //重定向到后台首页
+	this.Data["redirect"] = "/admin/main" //重定向到后台首页,msg[1]
 	this.Layout = this.moduleName + "/layout.html"
 	this.TplNames = this.moduleName + "/" + "showmsg.html"
 	this.Render()
