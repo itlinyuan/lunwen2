@@ -61,6 +61,7 @@ func (this *baseController) display(tpl ...string) {
 	if len(tpl) == 1 {
 		tplname = this.moduleName + "/" + tpl[0] + ".html"
 	} else {
+		//默认是admin/index/index.html
 		tplname = this.moduleName + "/" + this.controllerName + "/" + this.actionName + ".html"
 	}
 	this.Data["version"] = beego.AppConfig.String("AppVer")
