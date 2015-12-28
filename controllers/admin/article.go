@@ -54,6 +54,7 @@ func (this *ArticleController) List() {
 
 	this.Data["searchtype"] = searchtype
 	this.Data["keyword"] = keyword
+	this.Data["count_0"], _ = post.Query().Filter("status", 0).Count()
 	this.Data["count_1"], _ = post.Query().Filter("status", 1).Count()
 	this.Data["count_2"], _ = post.Query().Filter("status", 2).Count()
 	this.Data["status"] = status
@@ -109,11 +110,10 @@ func (this *ArticleController) Save() {
 	//	}
 
 	//	var list []*models.Post
-	//	new(models.Post).Query().All(&list)
-
+	//	new(models.Post).Query().Filter("status", 0).All(&list)
 	//	for _, v := range list {
 	//		//当前标题不能跟之前的文章标题重复（id != v.Id：过滤掉是编辑文章时本身的冲突）
-	//		if title == v.Title && id != v.Id {
+	//		if title == v.Title && id != v.Id && status == 0 {
 	//			this.showmsg("标题重复！")
 	//		}
 	//	}
@@ -237,6 +237,16 @@ func (this *ArticleController) Recover() {
 	id, _ := this.GetInt("id")
 	post := models.Post{Id: id}
 	if post.Read() == nil {
+
+		//		var list []*models.Post
+		//		new(models.Post).Query().Filter("status", 0).All(&list)
+		//		for _, v := range list {
+		//			//当前标题不能跟之前的文章标题重复（id != v.Id：过滤掉是编辑文章时本身的冲突）
+		//			if post.Title == v.Title {
+		//				this.showmsg("标题重复！")
+		//			}
+		//		}
+
 		//post.Delete()
 		post.Status = 0
 		post.Update("status")

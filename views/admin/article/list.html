@@ -2,7 +2,7 @@
 	<legend>文章列表</legend>
 
 	<div class="toolbar">
-		<a href="/admin/article/list?status=0" {{if eq .status 0}}class="active"{{end}}>已发布</a>
+		<a href="/admin/article/list?status=0" {{if eq .status 0}}class="active"{{end}}>已发布({{.count_0}})</a>
 		<span class="divider">|</span>
 		<a href="/admin/article/list?status=1" {{if eq .status 1}}class="active"{{end}}>草稿箱({{.count_1}})</a>
 		<span class="divider">|</span>

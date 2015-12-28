@@ -61,6 +61,8 @@ func (this *AccountController) Profile() {
 	if err := user.Read(); err != nil {
 		this.showmsg(err.Error())
 	}
+	//	user.LastIp = this.getClientIp()
+	//	user.Update("lastip")
 	if this.isPost() {
 		errmsg := make(map[string]string)
 		email := strings.TrimSpace(this.GetString("email"))

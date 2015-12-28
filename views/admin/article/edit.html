@@ -1,6 +1,6 @@
 <fieldset>
 	<legend>编辑文章</legend>
-	<form method="post" name="p" action="/admin/article/save">
+	<form method="post" name="p" action="/admin/article/save" onsubmit="return ShConfirm()">
 	<input type="hidden" name="id" value="{{.post.Id}}" />
 	<table class="table table-form">
 		<tbody>
@@ -69,7 +69,17 @@
 	</form>
 
 </fieldset>
-
+<script>
+        function ShConfirm() {
+			
+			if (document.p.title.value=="")
+       		{
+           		alert("请输入标题！");
+           		document.p.title.focus();
+           		return false;
+        	}
+        }
+ </script>
 <script src="/static/themes/admin/js/jquery.colorpicker.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function() {

@@ -1,6 +1,6 @@
 <fieldset>
 	<legend>发布文章</legend>
-	<form method="post" name="p" action="/admin/article/save">
+	<form method="post" name="p" action="/admin/article/save" onsubmit="return ShConfirm()">
 	<table class="table table-form">
 		<tbody>
 			<tr>
@@ -60,17 +60,29 @@
 		<tfoot>
 		<tr>
 			<td></td>
-			<td><button type="submit" class="btn" onclick="alert('!!!');"><i class="icon-ok"></i> 提交</button>
+			<td><button type="submit" class="btn"><i class="icon-ok"></i> 提交</button>
 				<button type="button" class="btn" onclick="javascript:history.back();">取消</button></td>
 		</tr>
 		</tfoot>
 	</table>
 	</form>
-
+	
 </fieldset>
-
+<script>
+        function ShConfirm() {
+			
+			if (document.p.title.value=="")
+       		{
+           		alert("请输入标题！");
+				
+           		document.p.title.focus();
+           		return false;
+        	}
+        }
+ </script>
 <script src="/static/themes/admin/js/jquery.colorpicker.js" type="text/javascript"></script>
 <script type="text/javascript">
+
 	$(function() {
 		$("#colorpicker").colorpicker({
 			fillcolor:true,
