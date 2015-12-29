@@ -94,8 +94,9 @@ func (this *baseController) isPost() bool {
 //获取用户IP地址
 func (this *baseController) getClientIp() string {
 	s := strings.Split(this.Ctx.Request.RemoteAddr, ":")
-
 	return s[0]
+	//	s　:= this.Ctx.Request.RemoteAddr
+	//	return s
 }
 
 //权限验证
