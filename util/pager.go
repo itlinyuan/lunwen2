@@ -61,11 +61,12 @@ func (this *Pager) ToString() string {
 	var from, to, linknum, offset, totalpage int
 
 	offset = 5
-	linknum = 10
+	linknum = 10 //只能显示10个链接跳转页面如：1-10,5-15
 
 	//总页数
 	totalpage = int(math.Ceil(float64(this.Totalnum) / float64(this.Pagesize)))
 
+	//from:从第几页开始显示，to:到第几页结束 共10个
 	if totalpage < linknum {
 		from = 1
 		to = totalpage
