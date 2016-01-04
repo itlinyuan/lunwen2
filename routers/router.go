@@ -15,6 +15,7 @@ func init() {
 	beego.Router("/article/:urlname(.+)", &blog.MainController{}, "*:Show") //别名访问，这里是博文，跟下面的左边菜单栏的实现逻辑一样。
 	beego.Router("/:urlname(.+)", &blog.MainController{}, "*:Show")         //别名访问,这里是左边菜单栏，（实际上也是一篇博文）
 	beego.Router("/archives", &blog.MainController{}, "*:Archives")
+	beego.Router("/moodlist", &blog.MainController{}, "*:MoodList")
 	beego.Router("/archives/page/:page:int", &blog.MainController{}, "*:Archives")
 	beego.Router("/category/:name(.+?)", &blog.MainController{}, "*:Category")
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
@@ -45,4 +46,5 @@ func init() {
 	beego.Router("/admin/user/delete", &admin.UserController{}, "*:Delete")
 
 	//心情管理
+	//beego.Router("admin/moodlist", &admin.MoodlistController{}, "*:Index")
 }

@@ -5,7 +5,7 @@
 		<div class="date">
 		<time datetime="{{$v.PostTime}}" data-updated="true" itemprop="datePublished">{{date $v.PostTime "M j"}}<span>th</span>, {{date $v.PostTime "Y"}}</time>
 		</div>
-		<div class="tags">{{str2html $v.TagsLink}}</div>
+		<div class="tags">{{str2html $v.TagsLink}}  <span class="eye-open">{{$v.Views}}</span></div>
 	</div>
 	<h1 class="title" itemprop="name">
 	<a href="{{$v.Link}}" itemprop="url">{{str2html $v.ColorTitle}}</a>

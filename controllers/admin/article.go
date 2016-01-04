@@ -40,7 +40,7 @@ func (this *ArticleController) List() {
 	if keyword != "" {
 		switch searchtype {
 		case "title":
-			query = query.Filter("title__icontains", keyword) //过滤的字段为字段名+“__icontains”
+			query = query.Filter("title__icontains", keyword) //title like '%关键字%'
 		case "author":
 			query = query.Filter("author__icontains", keyword)
 		case "tag":
@@ -211,7 +211,7 @@ func (this *ArticleController) Delete() {
 	if post.Read() == nil {
 		post.Delete()
 	}
-	this.Redirect("/admin/article/list", 302)
+	this.Redirect("/admin/article/list?status=2", 302)
 }
 
 //放到回收站

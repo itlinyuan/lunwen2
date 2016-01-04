@@ -120,7 +120,13 @@ func (this *MainController) Archives() {
 	this.display("archives")
 }
 
-//分类查看
+//心情列
+func (this *MainController) MoodList() {
+
+	this.display("moodlist")
+}
+
+//分标签查看
 func (this *MainController) Category() {
 	var (
 		page     int
