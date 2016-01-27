@@ -31,7 +31,7 @@ func (this *baseController) Prepare() {
 	this.cache = cache.(*util.LruCache)
 }
 
-//登录状态验证,查看是否已经登陆
+//登录状态验证,查看是否已经登陆或者是记住密码登录的
 func (this *baseController) auth() {
 	//默认的cookie名为：auth, 登录成功之后的cookie内容为（例子）：1|b1292146760b87cdee6e6f56c19827d9
 	arr := strings.Split(this.Ctx.GetCookie("auth"), "|")

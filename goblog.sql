@@ -108,7 +108,7 @@ CREATE TABLE `t_user` (
 insert  into `t_user`(`id`,`user_name`,`password`,`email`,`login_count`,`last_ip`,`last_login`,`authkey`,`active`) values (1,'admin','7fef6171469e80d32c0559f88b377245','admin@admin.com',6,'127.0.0.1','2013-12-25 10:00:11','',1);
 
 
-CREATE TABLE `t_mood` (
+CREATE TABLE `t_moodlist` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `value` text NOT NULL,
@@ -118,7 +118,12 @@ CREATE TABLE `t_mood` (
   `is_top` tinyint(3) NOT NULL DEFAULT '0' COMMENT '是否置顶',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
+/*ALTER TABLE `goblog`.`t_moodlist` 
+ADD CONSTRAINT `userid_fk`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `goblog`.`t_user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;*/
 insert into `t_mood`(`id`,`user_id`,`value`,`time`,`likes`,`shits`,`is_top`)value(1,1,'新年快乐','2016-1-1 10:27:49',100,20,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

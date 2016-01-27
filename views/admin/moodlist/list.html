@@ -1,0 +1,83 @@
+<fieldset>
+	<legend>心情记录</legend>
+
+	<script type="text/javascript" src="/static/themes/admin/js/jquery.qqFace.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.emotion').qqFace({
+			id : 'facebox', 
+			assign:'saytext', 
+			path:'/static/themes/admin/img/arclist/'	//表情存放的路径
+		});
+		});
+		
+		
+		var maxstrlen=140;
+		function Q(s){return document.getElementById(s);}
+		function checkWord(c){
+			len=maxstrlen;
+			var str = c.value;
+			myLen=getStrleng(str);
+			var wck=Q("wordCheck");
+			if(myLen>len*2){
+				c.value=str.substring(0,i+1);
+			}
+			else{
+				wck.innerHTML = Math.floor((len*2-myLen)/2);
+			}
+		}
+		function getStrleng(str){
+			myLen =0;
+			i=0;
+			for(;(i<str.length)&&(myLen<=maxstrlen*2);i++){
+				if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128)
+					myLen++;
+				else
+					myLen+=2;
+			}
+		return myLen;
+		}
+		
+		function ShConfirm() {
+			if (document.getElementById('saytext').value=="")
+       		{
+           		alert("至少要说点什么吧~");
+           		document.document.getElementById('saytext').focus();
+           		return false;
+        	}
+			document.location.href='/admin/moodlist/add?saytext='+document.getElementById('saytext').value;
+        }
+		
+	</script>
+
+	<div class="comment">
+       <div class="com_form">
+	   <h5>随便说点什么呗(还可以输入<span style="font-family: Georgia; font-size: 26px;" id="wordCheck">140</span>个字)</h5>
+       	<textarea class="input" id="saytext" name="saytext" onKeyUp="javascript:checkWord(this);" onMouseDown="javascript:checkWord(this);" ></textarea>
+       	<p><input type="button" class="sub_btn" value="发布" onclick="ShConfirm();"><span class="emotion">表情</span></p>
+       </div>
+    </div>    
+	<br>
+	<div class="moodlist">
+		{{range $k, $v := .list}}
+			<div class="bd">
+			<p class="moodvalue" >
+				{{str2html $v.ReplaceValue}}
+			</p>
+			<div class="meta">
+				<div class="date">
+				<time datetime="{{$v.Time}}">{{date $v.Time "M j"}}<span>th</span>, {{date $v.Time "Y"}}</time>
+				<span> 点赞数：{{$v.Likes}}</span><span> 吐槽数：{{$v.Shits}}</span><a> 置顶</a>
+				</div>
+			</div>
+			<HR style="border:1 dashed #987cb9" width="120%" color=#987cb9 SIZE=1>
+			</div>
+			<div class="avatar"><img src='/static/themes/admin/img/admin2.png' alt='Profile Picture' style='width: 30px;' /></div>
+		{{end}}
+		
+	</div>
+
+	<nav id="pagenavi">
+		{{str2html .pagebar}}
+	</nav>
+</fieldset>

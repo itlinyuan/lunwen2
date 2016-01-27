@@ -46,5 +46,6 @@ func init() {
 	beego.Router("/admin/user/delete", &admin.UserController{}, "*:Delete")
 
 	//心情管理
-	//beego.Router("admin/moodlist", &admin.MoodlistController{}, "*:Index")
+	beego.Router("admin/moodlist/list", &admin.MoodlistController{}, "*:List")
+	beego.Router("admin/moodlist/add", &admin.MoodlistController{}, "*:Add")
 }

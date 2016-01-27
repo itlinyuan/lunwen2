@@ -20,7 +20,8 @@ func Init() {
 	dsn := dbuser + ":" + dbpassword + "@tcp(" + dbhost + ":" + dbport + ")/" + dbname + "?charset=utf8&loc=Asia%2FShanghai"
 	//驱动，注册数据库和模型（对象关系模型）
 	orm.RegisterDataBase("default", "mysql", dsn)
-	orm.RegisterModel(new(User), new(Post), new(Tag), new(TagPost), new(Option))
+	//对应的数据库(orm)
+	orm.RegisterModel(new(User), new(Post), new(Tag), new(TagPost), new(Option), new(Moodlist))
 }
 
 //返回带前缀的表名
