@@ -31,7 +31,7 @@ func (this *MoodlistController) List() {
 
 	this.Data["count"] = count
 	this.Data["list"] = list
-	this.Data["pagebar"] = util.NewPager(page, int(count), pagesize, "").ToString()
+	this.Data["pagebar"] = util.NewPager(page, int(count), pagesize, "/admin/moodlist/list", true).ToString()
 	this.display()
 }
 
@@ -59,5 +59,28 @@ func (this *MoodlistController) Add() {
 	moodlist.Time = this.getTime()
 	moodlist.Insert()
 
+	this.Redirect("/admin/moodlist/list", 302)
+}
+
+//删除
+func (this *MoodlistController) Delete() {
+	id, _ := this.GetInt("id")
+	moodlist := models.Moodlist{Id: id}
+	if moodlist.Read() == nil {
+		moodlist.Delete()
+	}
+	this.Redirect("/admin/moodlist/list", 302)
+}
+
+func (this *MoodlistController) UpdateIstop() {
+	var moodlist models.Moodlist
+	moodlist.Id, _ = this.GetInt("id")
+	if this.GetString("istop") == "1" {
+		moodlist.IsTop = 1
+	} else {
+		moodlist.IsTop = 0
+	}
+
+	moodlist.Update("is_top")
 	this.Redirect("/admin/moodlist/list", 302)
 }

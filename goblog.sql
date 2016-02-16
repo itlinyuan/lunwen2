@@ -19,7 +19,7 @@ CREATE TABLE `t_option` (
 
 /*Data for the table `t_option` */
 
-insert  into `t_option`(`id`,`name`,`value`) values (1,'sitename','GoBlog演示'),(2,'siteurl','localhost:8080'),(3,'subtitle','基于Go语言和Beego框架的博客系统'),(4,'pagesize','10'),(5,'keywords','Go语言,博客程序,GoBlog'),(6,'description','基于Go语言和Beego框架的博客系统'),(7,'email','lisijie86@gmail.com'),(8,'theme','default'),(9,'timezone','8'),(10,'stat','');
+insert  into `t_option`(`id`,`name`,`value`) values (1,'sitename','GoBlog演示'),(2,'siteurl','localhost:8080'),(3,'subtitle','基于Go语言和Beego框架的博客系统'),(4,'pagesize','10'),(5,'keywords','Go语言,博客程序,GoBlog'),(6,'description','基于Go语言和Beego框架的博客系统'),(7,'email','itlinyuan@163.com'),(8,'theme','default'),(9,'timezone','8'),(10,'stat','');
 
 /*Table structure for table `t_post` */
 

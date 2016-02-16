@@ -11,6 +11,11 @@ type MainController struct {
 	baseController
 }
 
+type moodlistStatus struct {
+	likes int
+	shits int
+}
+
 //首页, 只显示前N条
 func (this *MainController) Index() {
 	var (
@@ -120,10 +125,94 @@ func (this *MainController) Archives() {
 	this.display("archives")
 }
 
-//心情列
+//心情列表
 func (this *MainController) MoodList() {
+	var (
+		list     []*models.Moodlist
+		pagesize int
+		err      error
+		page     int
+	)
 
+	if page, err = strconv.Atoi(this.Ctx.Input.Param(":page")); err != nil || page < 1 {
+		page = 1
+	}
+
+	if pagesize, err = strconv.Atoi(this.getOption("pagesize")); err != nil || pagesize < 1 {
+		pagesize = 20
+	} else {
+		pagesize *= 2
+	}
+
+	count, _ := new(models.Moodlist).Query().Count()
+	if count > 0 {
+		new(models.Moodlist).Query().OrderBy("-istop", "-time").Limit(pagesize, (page-1)*pagesize).All(&list) //为list赋值
+	}
+
+	this.Data["count"] = count
+	this.Data["list"] = list
+	this.Data["pagebar"] = util.NewPager(page, int(count), pagesize, "/moodlist").ToString() //设置分页
+	this.setHeadMetas("心情列表")
 	this.display("moodlist")
+}
+
+func (this *MainController) UpdateLikeAndShit() {
+
+	var moodlist models.Moodlist
+	var moodliststatus moodlistStatus
+	id, _ := this.GetInt("id")
+	status, _ := this.GetInt("status")
+	moodlist.Id = id
+	err1 := moodlist.Read()
+
+	if err1 != nil {
+		this.Abort("404") //内置404页面
+	}
+	//	id := 34
+	//	moodlist := models.Moodlist{Id: id}
+	if status == 0 {
+		moodlist.Likes++
+		moodlist.Update("Likes")
+		moodliststatus.likes = moodlist.Likes
+		//return moodlist.Likes
+	} else if status == 1 {
+		moodlist.Shits++
+		moodlist.Update("Shits")
+		moodliststatus.shits = moodlist.Shits
+		//return moodlist.Shits
+	}
+
+	var (
+		list     []*models.Moodlist
+		pagesize int
+		err      error
+		page     int
+	)
+
+	if page, err = strconv.Atoi(this.Ctx.Input.Param(":page")); err != nil || page < 1 {
+		page = 1
+	}
+
+	if pagesize, err = strconv.Atoi(this.getOption("pagesize")); err != nil || pagesize < 1 {
+		pagesize = 20
+	} else {
+		pagesize *= 2
+	}
+
+	count, _ := new(models.Moodlist).Query().Count()
+	if count > 0 {
+		new(models.Moodlist).Query().OrderBy("-istop", "-time").Limit(pagesize, (page-1)*pagesize).All(&list) //为list赋值
+	}
+
+	this.Data["count"] = count
+	this.Data["list"] = list
+	this.Data["pagebar"] = util.NewPager(page, int(count), pagesize, "/moodlist").ToString() //设置分页
+	this.setHeadMetas("心情列表")
+	this.display("moodlist")
+
+	//返回json数据
+	this.Data["json"] = moodlist
+	this.ServeJson()
 }
 
 //分标签查看

@@ -43,7 +43,9 @@ func (m *Moodlist) Update(fields ...string) error {
 }
 
 func (m *Moodlist) Delete() error {
-
+	if _, err := orm.NewOrm().Delete(m); err != nil {
+		return err
+	}
 	return nil
 }
 

@@ -11,7 +11,6 @@
 		});
 		});
 		
-		
 		var maxstrlen=140;
 		function Q(s){return document.getElementById(s);}
 		function checkWord(c){
@@ -58,7 +57,10 @@
        </div>
     </div>    
 	<br>
+	-----------------------<a class="moodlistcount">{{.count}}</a>条心情-----------------------
+	<br><br>
 	<div class="moodlist">
+	
 		{{range $k, $v := .list}}
 			<div class="bd">
 			<p class="moodvalue" >
@@ -66,8 +68,16 @@
 			</p>
 			<div class="meta">
 				<div class="date">
-				<time datetime="{{$v.Time}}">{{date $v.Time "M j"}}<span>th</span>, {{date $v.Time "Y"}}</time>
-				<span> 点赞数：{{$v.Likes}}</span><span> 吐槽数：{{$v.Shits}}</span><a> 置顶</a>
+				<time datetime="{{$v.Time}}">{{date $v.Time "m j"}}<span>th</span>, {{date $v.Time "Y"}}</time> {{date $v.Time "H:i:s"}}
+				&nbsp;&nbsp;
+				<span> 点赞数：{{$v.Likes}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> 吐槽数：{{$v.Shits}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+				{{if eq $v.IsTop 0}}
+				<a href="/admin/moodlist/updateistop?id={{$v.Id}}&istop=1" class="moodlisttop"> 置顶</a>
+				{{else}}
+				<a href="/admin/moodlist/updateistop?id={{$v.Id}}&istop=0" class="moodlisttop"> 取消置顶</a>
+				{{end}}
+				&nbsp;&nbsp;
+				<a href="/admin/moodlist/delete?id={{$v.Id}}" class="moodlistdel" onclick="return del_confirm()"> 删除</a>
 				</div>
 			</div>
 			<HR style="border:1 dashed #987cb9" width="120%" color=#987cb9 SIZE=1>

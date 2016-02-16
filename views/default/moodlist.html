@@ -1,3 +1,134 @@
-<div>
-心情列表--开发中
-</div>
+	<script>
+    (function($) {
+        $.extend({
+            tipsBox: function(options) {
+                options = $.extend({
+                    obj: null,  //jq对象，要在那个html标签上显示
+                    str: "+1",  //字符串，要显示的内容;也可以传一段html，如: "<b style='font-family:Microsoft YaHei;'>+1</b>"
+                    startSize: "12px",  //动画开始的文字大小
+                    endSize: "30px",    //动画结束的文字大小
+                    interval: 600,  //动画时间间隔
+                    color: "red",    //文字颜色
+                    callback: function() {}    //回调函数
+                }, options);
+                $("body").append("<span class='num'>"+ options.str +"</span>");
+                var box = $(".num");
+                var left = options.obj.offset().left + options.obj.width() / 2;
+                var top = options.obj.offset().top - options.obj.height();
+                box.css({
+                    "position": "absolute",
+                    "left": left + "px",
+                    "top": top + "px",
+                    "z-index": 9999,
+                    "font-size": options.startSize,
+                    "line-height": options.endSize,
+                    "color": options.color
+                });
+                box.animate({
+                    "font-size": options.endSize,
+                    "opacity": "0",
+                    "top": top - parseInt(options.endSize) + "px"
+                }, options.interval , function() {
+                    box.remove();
+                    options.callback();
+                });
+            }
+        });
+    })(jQuery);
+</script>
+
+<script>
+	$(function() {
+		$("span[id*='like_btn']").click(function() {
+			$.tipsBox({
+				obj: $(this),
+				str: "赞+1",
+                callback: function() {
+                    //alert(5);
+                }
+			});
+        	 
+		});
+		$("span[id*='shit_btn']").click(function() {
+			$.tipsBox({
+				obj: $(this),
+				str: "切+1",
+                callback: function() {
+                    //alert(5);
+                }
+			});
+			//window.location.href="moodlist";
+		});
+	});
+	
+	function ajax_likesandshit(id,status){
+		//这里要改
+		//var likesNum = document.getElementsByClassName('like_btn_'+id)[0];
+		//alert(likesNum.innerHTML);
+		if(status ==0 ){
+			$.ajax({
+				type:"GET",
+				url:"/updateLikeAndShit",
+				async:false,
+				data:{'id':id,'status':0}, //status=0是指点赞的
+				dataType:"json",
+				success:function(data){
+      				$("#like_btn_"+id).html("点赞("+data['Likes']+")");
+    			},
+				error:function(data){
+      				//$("#resText").html("rt");
+					//alert(data);
+    			}
+		  });
+		}else{
+			$.ajax({
+				type:"GET",
+				url:"/updateLikeAndShit",
+				async:false,
+				data:{'id':id,'status':1}, //status=0是指点赞的
+				dataType:"json",
+				success:function(data){
+					//alert(JSON.stringify(data));
+      				$("#shit_btn_"+id).html("吐槽("+data['Shits']+")");
+    			},
+				error:function(){
+					alert(data);
+    			}
+		  });
+		}
+	 }
+</script>
+
+	<div class="moodlist">
+		{{range $k, $v := .list}}
+		<br>
+		<div class="ds-post-main">
+			<div class="ds-avatar">
+				<a href="" > </a>
+			</div>
+			<div class="ds-comment-body">
+				<p class="moodvalue" >
+					{{str2html $v.ReplaceValue}}
+				</p>
+				<br>
+				<div class="meta">
+					<div class="date">
+					<time datetime="{{$v.Time}}">{{date $v.Time "M j"}}<span>th</span>, {{date $v.Time "Y"}}</time>
+					&nbsp;&nbsp;
+					<span id="like_btn_{{$v.Id}}" onclick="ajax_likesandshit({{$v.Id}},0);"> 点赞({{$v.Likes}})</span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="shit_btn_{{$v.Id}}" onclick="ajax_likesandshit({{$v.Id}},1);"> 吐槽({{$v.Shits}})</span>&nbsp;&nbsp;&nbsp;&nbsp;	
+					</div>
+				</div>
+				<br>
+				<!--input placeholder="说说点东西呗..." type="text" name="moodlistcomment">
+				<input type="button" name="moodlistpublish" class="span3" value="发表"/-->
+		 	</div>
+		</div>
+		
+		{{end}}
+		
+	</div>
+	<br>
+	<nav id="pagenavi">
+		{{str2html .pagebar}}
+	</nav>

@@ -16,7 +16,10 @@ func init() {
 	beego.Router("/:urlname(.+)", &blog.MainController{}, "*:Show")         //别名访问,这里是左边菜单栏，（实际上也是一篇博文）
 	beego.Router("/archives", &blog.MainController{}, "*:Archives")
 	beego.Router("/moodlist", &blog.MainController{}, "*:MoodList")
+	beego.Router("/updateLikeAndShit", &blog.MainController{}, "*:UpdateLikeAndShit")
 	beego.Router("/archives/page/:page:int", &blog.MainController{}, "*:Archives")
+	beego.Router("/moodlist/page/:page:int", &blog.MainController{}, "*:MoodList")
+	beego.Router("/updateLikeAndShit/page/:page:int", &blog.MainController{}, "*:UpdateLikeAndShit")
 	beego.Router("/category/:name(.+?)", &blog.MainController{}, "*:Category")
 	beego.Router("/category/:name(.+?)/page/:page:int", &blog.MainController{}, "*:Category")
 
@@ -48,4 +51,6 @@ func init() {
 	//心情管理
 	beego.Router("admin/moodlist/list", &admin.MoodlistController{}, "*:List")
 	beego.Router("admin/moodlist/add", &admin.MoodlistController{}, "*:Add")
+	beego.Router("admin/moodlist/delete", &admin.MoodlistController{}, "*:Delete")
+	beego.Router("admin/moodlist/updateistop", &admin.MoodlistController{}, "*:UpdateIstop")
 }
