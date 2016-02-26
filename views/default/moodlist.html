@@ -72,7 +72,7 @@
 				async:false,
 				data:{'id':id,'status':0}, //status=0是指点赞的
 				dataType:"json",
-				success:function(data){
+				success:function(data){ //返回的数据是data
       				$("#like_btn_"+id).html("点赞("+data['Likes']+")");
     			},
 				error:function(data){

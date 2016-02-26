@@ -11,11 +11,6 @@ type MainController struct {
 	baseController
 }
 
-type moodlistStatus struct {
-	likes int
-	shits int
-}
-
 //首页, 只显示前N条
 func (this *MainController) Index() {
 	var (
@@ -159,7 +154,6 @@ func (this *MainController) MoodList() {
 func (this *MainController) UpdateLikeAndShit() {
 
 	var moodlist models.Moodlist
-	var moodliststatus moodlistStatus
 	id, _ := this.GetInt("id")
 	status, _ := this.GetInt("status")
 	moodlist.Id = id
@@ -173,12 +167,10 @@ func (this *MainController) UpdateLikeAndShit() {
 	if status == 0 {
 		moodlist.Likes++
 		moodlist.Update("Likes")
-		moodliststatus.likes = moodlist.Likes
 		//return moodlist.Likes
 	} else if status == 1 {
 		moodlist.Shits++
 		moodlist.Update("Shits")
-		moodliststatus.shits = moodlist.Shits
 		//return moodlist.Shits
 	}
 
